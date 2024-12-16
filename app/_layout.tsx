@@ -5,7 +5,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import "nes.css/css/nes.min.css";
+import "nes-ui-react/dist/nes-ui.css"
+import { Button, setDarkModeActivation } from "nes-ui-react";
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -24,6 +25,9 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+
+  useEffect(() => setDarkModeActivation(false), []);
 
   if (!loaded) {
     return null;
