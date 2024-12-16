@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import "nes.css/css/nes.min.css";
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -15,6 +16,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    PressStart2P: require('../assets/fonts/PressStart2P-Regular.ttf')
   });
 
   useEffect(() => {
@@ -29,8 +31,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack
-      >
+      <Stack>
         <Stack.Screen name="(home)" options={{ headerShown: false }} />
         <Stack.Screen name="lists" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
