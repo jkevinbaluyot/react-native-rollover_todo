@@ -1,20 +1,26 @@
-import styles from '../styles.tsx';
-import { View, Text } from 'react-native';
+import { ThemedView } from '../../components/ThemedView';
 import { formatDate } from '../../utils/formatDate.js';
-import { Button, Heading, Container } from "nes-ui-react";
+import { ThemedText } from '../../components/ThemedText';
+import RecentTodos from '../../components/RecentTodos'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function HomeScreen() {
   const todayDate = formatDate(new Date());
 
   return (
-    <View style={styles.pageContainer}>
-      <Heading dense size='xlarge'>Todos</Heading>
+    <SafeAreaView>
+      <ThemedView>
+        <ThemedText type="title">
+          Todos
+        </ThemedText>
 
-      <Container>
-        <Button>Settings</Button>
-      </Container>
-      <Text style={styles.baseText}>Date: {todayDate}</Text>
-    </View>
+        <ThemedText>
+          {todayDate}
+        </ThemedText>
+
+        <RecentTodos/>
+      </ThemedView>
+    </SafeAreaView> 
   );
 }
 
