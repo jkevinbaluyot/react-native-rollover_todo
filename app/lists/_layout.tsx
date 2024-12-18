@@ -4,16 +4,14 @@ export default function Layout() {
   return <Stack>
           <Stack.Screen
               name="[id]"
-              options={{
+              options={{ 
                // Hide the header for this route
-               headerShown: false,
              }}
           />
           <Stack.Screen
              name="index"
              options={{
                // Hide the header for this route
-               headerShown: false,
              }}
            />
          </Stack>;

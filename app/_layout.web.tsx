@@ -29,12 +29,20 @@ export default function WebRootLayout() {
   if (!loaded) {
     return null;
   }
+  
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'white',
+    },
+  };
 
   return (
-    <>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : MyTheme}>
       {/*Header*/}
       <Slot />
       {/*Footer*/}
-    </>
+    </ThemeProvider>
   );
 }

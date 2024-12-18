@@ -6,7 +6,6 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import "../assets/stylesheets/index.css";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -29,10 +28,26 @@ export default function RootLayout() {
     return null;
   }
 
+  
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white',
+  },
+};
+
+const MyDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+  },
+};
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'dark' ? MyDarkTheme : MyTheme}>
       <Stack>
-        <Stack.Screen name="(home)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="lists" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>

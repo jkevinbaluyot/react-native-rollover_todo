@@ -16,7 +16,7 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-
+ 
   return (
     <Text
       style={[
@@ -45,10 +45,9 @@ const styles = StyleSheet.create({
     fontFamily: 'PressStart2P',
   },
   title: {
-    fontSize: 32,
-    lineHeight: 32,
+    fontSize: 24,
+    lineHeight: 24,
     fontFamily: 'PressStart2P',
-    marginBottom: 16,
   },
   subtitle: {
     fontSize: 20,
