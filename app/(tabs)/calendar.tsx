@@ -27,7 +27,7 @@ LocaleConfig.locales['fr'] = {
     'December'
   ],
   monthNamesShort: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May.', 'Jun.', 'Jul.', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'],
-  dayNames: ['Sunday', 'Moday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   dayNamesShort: ['S.', 'M.', 'T.', 'W.', 'Th.', 'F.', 'Sat.'],
   today: "Today"
 };
@@ -80,6 +80,7 @@ function CalendarScreen() {
 
         <ThemedView
           style={getCalendarStyle().default}
+          className='my-2'
         >
           <Calendar 
             onDayPress={selectedDate}
@@ -105,8 +106,7 @@ const getCalendarStyle = () => {
     default: {
       borderWidth: 4,
       borderColor: borderColor,
-      borderRadius: 6,
-      padding: 8
+      borderRadius: 6
     }
   });
 }

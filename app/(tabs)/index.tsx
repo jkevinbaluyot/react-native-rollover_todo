@@ -24,7 +24,7 @@ function HomeScreen() {
         </HeaderContainer>
 
         <ThemedView 
-          className='px-0 items-baseline'
+          className='p-0 my-2 items-baseline'
         >
           <Button
             title="Default"
