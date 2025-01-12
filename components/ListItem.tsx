@@ -43,7 +43,6 @@ export function ListItem({
                       onClick={updateCheckbox}
                       isChecked={toggleCheckBox}
                       checkBoxColor={border_color}
-                      
                   />
               </View>
 
@@ -67,7 +66,7 @@ export function ListItem({
 
 const checkbox_text_style = StyleSheet.create({
   default: {
-    width: '100%'
+    width: 100% -24
   },
   checked: {
     textDecorationLine: 'line-through',
