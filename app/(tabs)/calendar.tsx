@@ -1,13 +1,10 @@
-import { formatDate } from '../../utils/formatDate.js';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedScrollView } from '@/components/ThemedScrollView';
 import { HeaderContainer } from '@/components/HeaderContainer';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
-import { Button } from '@/components/Button';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { useState } from 'react';
 import { ThemedView } from '@/components/ThemedView';
 import { StyleSheet } from 'react-native';
  

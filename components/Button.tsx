@@ -8,6 +8,7 @@ export type ButtonPropsTheme = ButtonProps & {
   darkColor?: string;
   title?: string;
   className?: string;
+  size?: 'large' | 'default';
   type?: 'default' | 'success' | 'error' | 'primary';
 };
 
@@ -45,6 +46,7 @@ export function Button({
   lightColor,
   darkColor,
   title = "",
+  size = 'default',
   type = 'default',
   ...rest
 }: ButtonPropsTheme) {
@@ -63,7 +65,7 @@ export function Button({
         {borderColor},
         {boxShadow},
         getButtonBackgroundColor(type),
-        styles.primary,
+        size === 'large' ? styles.large : undefined,
         buttonPressed ?  undefined : border_styles.not_clicked, 
       ]}
       {...rest}
@@ -83,7 +85,9 @@ const styles = StyleSheet.create({
   default: {
     fontFamily: 'PressStart2P', 
   },
-  primary:{
+  large:{
+    height: 50,
+    width: 50
   },
   success:{ 
   },
@@ -97,6 +101,8 @@ const border_styles = StyleSheet.create({
         borderRadius: 6,
         padding: 8,
         marginBottom: 16,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     not_clicked:{
       transform: ' translateY(-4px)'

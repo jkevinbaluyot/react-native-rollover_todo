@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import CustomSwitch from 'react-native-custom-switch-new';
 
-export type ButtonPropsTheme = {
-  container_style?: ViewStyle,
+export type SwitchProps = {
+  container_style?: ViewStyle;
   lightColor?: string;
   darkColor?: string;
   text?: string;
@@ -18,7 +18,7 @@ export function ThemedSwitch({
   darkColor,
   text = "",
   ...rest
-}: ButtonPropsTheme) {
+}: SwitchProps) {
   const default_color = useThemeColor({ light: lightColor, dark: darkColor }, 'text')
   const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'border');
   const success_color = useThemeColor({}, 'success');

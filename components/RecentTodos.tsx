@@ -3,10 +3,11 @@ import { ThemedView } from './ThemedView';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { Button } from './Button';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Link } from 'expo-router';
 
 type ItemProps = {date: string};
 
-const DATA = [{date: '12/21/2024'}, {date: '12/22/2024'}, {date: '12/23/2024'}, {date: '12/24/2024'}, {date: '12/25/2024'}]
+const DATA = [{date: '12-21-2024'}, {date: '12-22-2024'}, {date: '12-23-2024'}, {date: '12-24-2024'}, {date: '12-25-2024'}]
 
 const Item = ({date}: ItemProps) => {
 
@@ -14,7 +15,7 @@ const Item = ({date}: ItemProps) => {
             className='flex justify-between flex-row items-center mb-2'
             style={getListStyle().default}
           >
-            <ThemedText>{date}</ThemedText>
+            <Link href={"/lists/"+date+""}><ThemedText>{date}</ThemedText></Link>
             <Button
               title="X"
               type="error"

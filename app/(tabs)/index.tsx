@@ -15,11 +15,7 @@ function HomeScreen() {
       <ThemedScrollView>
         <HeaderContainer>
           <ThemedText type="title">
-            Todos
-          </ThemedText>
-
-          <ThemedText>
-            {todayDate}
+            Home
           </ThemedText>
         </HeaderContainer>
 
