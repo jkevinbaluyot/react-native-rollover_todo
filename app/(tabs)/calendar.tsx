@@ -33,7 +33,7 @@ LocaleConfig.locales['fr'] = {
 LocaleConfig.defaultLocale = 'fr';
 
 function selectedDate(date?: any) {
-  router.replace(`/lists/${date?.dateString}`);
+  router.push(`/lists/${date?.dateString}`, { relativeToDirectory: true })
 } 
 
 function monthChanged(date?: object) {

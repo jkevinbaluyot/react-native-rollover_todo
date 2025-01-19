@@ -35,7 +35,7 @@ export function ListItem({
             className='flex-initial justify-between flex-row items-center my-3 items-baseline'
           >
               <View
-                  className="w-5/6 mr-2"
+                  className="w-5/6"
               >
                   <CheckBox
                       rightTextStyle={

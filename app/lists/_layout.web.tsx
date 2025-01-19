@@ -3,7 +3,7 @@ import { Link } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { StyleSheet } from 'react-native';
 
-function HomePageHeader (props: any) {
+export function HomePageHeader (props: any) {
   return(
     <Link
       href="/"

@@ -30,7 +30,7 @@ export function ThemedSwitch({
   return (
     <View
       style={[container_style]}
-      className='items-center flex-row m-auto my-2'
+      className='items-center flex-row my-2'
     >
       <CustomSwitch
           onSwitch={() => toggleSwitch()}
