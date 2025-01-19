@@ -47,7 +47,12 @@ const MyDarkTheme = {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? MyDarkTheme : MyTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="(tabs)" 
+          options={{ 
+            headerShown: false,
+          }} 
+         />
         <Stack.Screen name="lists" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>

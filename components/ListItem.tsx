@@ -29,7 +29,7 @@ export function ListItem({
 
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
   const border_color = useThemeColor({ light: lightColor, dark: darkColor }, 'border');
- 
+  const toggle_style = toggleCheckBox ? checkbox_text_style.checked : undefined;
 
   return <View 
             className='flex-initial justify-between flex-row items-center my-3 items-baseline'
@@ -38,8 +38,15 @@ export function ListItem({
                   className="w-5/6 mr-2"
               >
                   <CheckBox
-                      rightTextStyle={[styles.default, {color}, checkbox_text_style.default, toggleCheckBox ? checkbox_text_style.checked : undefined]}
-                      rightText={<ThemedText>{text}</ThemedText>}
+                      rightTextStyle={
+                        {
+                         ...styles.default,
+                         color, 
+                         ...checkbox_text_style.default,
+                         ...toggle_style,
+                        }
+                      }
+                      rightText={text}
                       onClick={updateCheckbox}
                       isChecked={toggleCheckBox}
                       checkBoxColor={border_color}
@@ -57,16 +64,13 @@ export function ListItem({
                       type="error"   
                   />
                 </View>
-
               </View>
-   
-
         </View>
 }
 
 const checkbox_text_style = StyleSheet.create({
   default: {
-    width: 100% -24
+    width: 100% - 24 // 24 is the width of checkbox
   },
   checked: {
     textDecorationLine: 'line-through',

@@ -7,7 +7,8 @@ import {LocaleConfig} from 'react-native-calendars';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedView } from '@/components/ThemedView';
 import { StyleSheet } from 'react-native';
- 
+import { router } from 'expo-router';
+
 LocaleConfig.locales['fr'] = {
   monthNames: [
     'January',
@@ -31,8 +32,8 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
-function selectedDate(date?: object) {
-  console.log(date)
+function selectedDate(date?: any) {
+  router.replace(`/lists/${date?.dateString}`);
 } 
 
 function monthChanged(date?: object) {
@@ -77,7 +78,7 @@ function CalendarScreen() {
 
         <ThemedView
           style={getCalendarStyle().default}
-          className='my-2'
+          className='my-2 p-1 md:p-5'
         >
           <Calendar 
             onDayPress={selectedDate}

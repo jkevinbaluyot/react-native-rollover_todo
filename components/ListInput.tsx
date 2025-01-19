@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
     fontFamily: 'PressStart2P',
     borderRadius: 6,
     padding: 10,
+    width: 100% - 50 // 50 is the width of the button
   },
 });
