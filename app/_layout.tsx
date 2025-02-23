@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import "../assets/stylesheets/index.css";
+import { InitializeDb } from '@/hooks/InitializeDb';
+import { DbProvider } from '@/providers/DbProvider';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -46,17 +48,20 @@ const MyDarkTheme = {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? MyDarkTheme : MyTheme}>
-      <Stack>
-        <Stack.Screen 
-          name="(tabs)" 
-          options={{ 
-            headerShown: false,
-          }} 
-         />
-        <Stack.Screen name="lists" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+      <DbProvider>
+        <InitializeDb />
+        <Stack>
+          <Stack.Screen 
+            name="(tabs)" 
+            options={{ 
+              headerShown: false,
+            }} 
+          />
+          <Stack.Screen name="lists" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </DbProvider>
     </ThemeProvider>
   );
 }
