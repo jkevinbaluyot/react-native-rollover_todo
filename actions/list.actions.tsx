@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { List } from '@/models';
+import { deleteListItemsByListId } from './list_item.actions';
 
 const table_name = 'lists';
 
@@ -40,3 +41,10 @@ export const getOrCreateList = async (db: Promise<SQLite.SQLiteDatabase>, date_s
 
     return (await db).getFirstAsync< List >(`SELECT * FROM ${table_name} where date_string = $date_string`, { $date_string: date_string });
 }
+
+export const deleteListById = async (db: Promise<SQLite.SQLiteDatabase>, id: number) => {
+    return (await db).runAsync(`DELETE FROM ${table_name} WHERE id = $id`, { $id: id })
+                        .then(() => {
+                            deleteListItemsByListId(db, id)
+                        });
+};

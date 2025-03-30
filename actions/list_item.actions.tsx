@@ -39,3 +39,7 @@ export const updateListItem = async (db: SQLite.SQLiteDatabase, list_item: ListI
 export const deleteListItem = async (db: SQLite.SQLiteDatabase, id: number) => {
     return await db.runAsync(`DELETE FROM ${table_name} WHERE value = $id`, { $id: id });
 };
+
+export const deleteListItemsByListId = async (db: Promise<SQLite.SQLiteDatabase>, list_id: number) => {
+    return (await db).runAsync(`DELETE FROM ${table_name} WHERE list_id = $list_id`, { $list_id: list_id });
+};

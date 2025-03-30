@@ -1,7 +1,7 @@
 import { ThemedView } from '../../components/ThemedView';
 import { formatDate } from '../../utils/formatDate.js';
 import { ThemedText } from '../../components/ThemedText';
-import { RecentTodos } from '../../components/RecentTodos'
+import { RecentTodos } from '../../components/recent_todos/RecentTodos'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HeaderContainer } from '@/components/HeaderContainer';
 import { ThemedScrollView } from '@/components/ThemedScrollView';
