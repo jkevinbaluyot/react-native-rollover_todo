@@ -31,7 +31,6 @@ const useCalendarHook = ({
         .then((result) => {
           const mappedData = listCalendarFormat(result);
           setCalendarData(mappedData);
-          console.log(mappedData)
         })
         .catch((error) => {
           console.error('Error fetching calendar data:', error);

@@ -1,5 +1,5 @@
 export type ListItem = {
-    id: number;
+    id: number | undefined;
     value: string;
     done: boolean;
     list_id: number;
