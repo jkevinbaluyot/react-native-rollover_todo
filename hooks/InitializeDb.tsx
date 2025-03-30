@@ -9,8 +9,11 @@ export function InitializeDb() {
     const { db_connection } = useContext(DatabaseContext)
 
     useEffect(() => {   
-        createListTable(db_connection);
-        createListItemTable(db_connection);
+        if(db_connection){
+          createListTable(db_connection);
+          createListItemTable(db_connection);
+        }
+
       return () => {
         
       }

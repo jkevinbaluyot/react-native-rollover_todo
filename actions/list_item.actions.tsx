@@ -12,8 +12,8 @@ export const createTable = async (db: Promise<SQLite.SQLiteDatabase>) => {
     `);
 };
 
-const getListItems = async (db: SQLite.SQLiteDatabase, list_id: number) => {
-    return await db.getFirstAsync(`SELECT * FROM ${table_name} WHERE LIST_ID = ${list_id}`);
+export const getListItems = async (db: Promise<SQLite.SQLiteDatabase>, list_id: number) => {
+    return (await db).getAllAsync(`SELECT * FROM ${table_name} WHERE list_id = ${list_id}`);
 };
 
 export const createListItem = async (db: SQLite.SQLiteDatabase, list_item: ListItem) => {
@@ -23,7 +23,7 @@ export const createListItem = async (db: SQLite.SQLiteDatabase, list_item: ListI
         $list_id: list_item.list_id 
     }; 
 
-    return await db.runAsync(`INSERT INTO test (value, done, list_id) VALUES ($value, $done, $list_id);`, values);
+    return await db.runAsync(`INSERT INTO ${table_name} (value, done, list_id) VALUES ($value, $done, $list_id);`, values);
 };
 
 export const updateListItem = async (db: SQLite.SQLiteDatabase, list_item: ListItem) => {

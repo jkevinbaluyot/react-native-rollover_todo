@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { ListItem } from '@/models';
+import { List } from '@/models';
 
 const table_name = 'lists';
 
@@ -12,13 +12,31 @@ export const createTable = async (db: Promise<SQLite.SQLiteDatabase>) => {
     `);
 };
 
-const getAllLists = async (db: SQLite.SQLiteDatabase) => {
+export const getAllLists = async (db: SQLite.SQLiteDatabase, year: number) => {
     return await db.getAllAsync(`SELECT * FROM ${table_name}`);
 }
 
-// Create list using date if it doesn't exist
-const getList = async (db: SQLite.SQLiteDatabase, date_string: string ) => {
-    const values = { $date_string: date_string };
+export const getRecentLists = async (db: Promise<SQLite.SQLiteDatabase>) => {
+    return (await db).getAllAsync(`SELECT * FROM ${table_name} ORDER BY id DESC LIMIT 10`);
+}
 
-    return await db.getFirstAsync(`INSERT OR REPLACE INTO ${table_name} (date_string) VALUES ($date_string)`, values);
+export const getListsByDateRange = async (
+    db: Promise<SQLite.SQLiteDatabase>,
+    startDate: string,
+    endDate: string
+) => {
+    return (await db).getAllAsync(
+        `SELECT * FROM ${table_name} WHERE date_string BETWEEN $startDate AND $endDate`,
+        { $startDate: startDate, $endDate: endDate }
+    );
+};
+
+// Create list using date if it doesn't exist
+export const getOrCreateList = async (db: Promise<SQLite.SQLiteDatabase>, date_string: string ) => {
+    const result = (await db).runAsync(`INSERT INTO ${table_name} (date_string)
+                                    SELECT $date_string
+                                    WHERE NOT EXISTS (SELECT 1 FROM ${table_name} WHERE date_string = $date_string) `,
+                                    {$date_string: date_string});
+
+    return (await db).getFirstAsync< List >(`SELECT * FROM ${table_name} where date_string = $date_string`, { $date_string: date_string });
 }

@@ -5,7 +5,7 @@ import { ThemedView } from './ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
 type ListInputProps = {
-  id?: string;
+  id?: number | null;
 };
 
 export function ListInput({

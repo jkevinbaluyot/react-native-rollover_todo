@@ -8,6 +8,11 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedView } from '@/components/ThemedView';
 import { StyleSheet } from 'react-native';
 import { router } from 'expo-router';
+import { useContext, useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import { DatabaseContext } from '@/providers/DbProvider';
+import useCalendarHook from '@/hooks/data/useCalendarHook';
+import { set } from 'date-fns';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -32,18 +37,28 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
-function selectedDate(date?: any) {
-  router.push(`/lists/${date?.dateString}`, { relativeToDirectory: true })
-} 
-
-function monthChanged(date?: object) {
-  console.log(date)
-} 
-
 function CalendarScreen() {
   const color = useThemeColor({}, 'text');
   const backgroundColor = useThemeColor({}, 'background');
   const primary = useThemeColor({}, 'primary');
+  const isFocused = useIsFocused();
+  const { db_connection } = useContext(DatabaseContext);
+  const [selected_date, setSelectedDate] = useState(new Date().toISOString());
+  const { calendarData, setCalendarData, fetchCalendarData } = useCalendarHook({ date: selected_date });
+
+  function monthChanged(date?: any) {
+    const day = new Date(date.dateString);
+    const start_date = new Date(day.getFullYear(), day.getMonth(), 1);
+    const end_date = new Date(day.getFullYear(), day.getMonth() + 1, 1);
+
+    fetchCalendarData(db_connection, start_date.toISOString(), end_date.toISOString());
+  } 
+
+    
+  function selectedDate(date?: any) {
+    setSelectedDate(date.dateString);
+    router.push(`/lists/${date?.dateString}`, { relativeToDirectory: true })
+  } 
 
   const calendar_theme = {
       backgroundColor: backgroundColor,
@@ -84,11 +99,7 @@ function CalendarScreen() {
             onDayPress={selectedDate}
             onMonthChange={monthChanged}
             theme={calendar_theme}
-            markedDates={{
-              '2024-12-01': {marked: true},
-              '2024-12-02': {marked: true},
-              '2024-12-03': {marked: true}
-            }}
+            markedDates={calendarData}
           />
         </ThemedView>
 
