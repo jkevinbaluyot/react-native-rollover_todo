@@ -5,6 +5,7 @@ import { ThemedView } from '../ThemedView';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useState } from 'react';
 
+
 type ListInputProps = {
   id?: number | null;
   addItem: (value: string, list_id: number) => Promise<void>;
@@ -19,6 +20,11 @@ export function ListInput({
   const color = useThemeColor({}, 'text');
 
   const handleSubmit = () => {
+    if (text.trim() === '') {
+      console.error('Input cannot be empty');
+      return;
+    }
+
     if (id !== null && id !== undefined) {
       addItem(text, id)
         ?.then(() => setText(''))
@@ -50,7 +56,7 @@ export function ListInput({
   )
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   input: {
     height: 50,
     borderWidth: 4,

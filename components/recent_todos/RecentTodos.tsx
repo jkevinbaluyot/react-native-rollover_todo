@@ -40,12 +40,13 @@ export function RecentTodos() {
   return (
     <ThemedView className='px-0 my-2'>
       <ThemedText className='mb-4' type="subtitle">
-        Recent
+      Recent
       </ThemedText>
 
-      <FlatList data={recentTodos} 
-        renderItem={({item}) => <Item id={item.id} date_string={item.date_string} />}
-        keyExtractor={item => item.id.toString()}
+      <FlatList 
+        data={recentTodos.filter((item) => item?.id !== null && item?.id !== undefined && item?.date_string !== null)} 
+        renderItem={({item}) => <Item id={item?.id} date_string={item?.date_string} />}
+        keyExtractor={item => item?.id ? String(item.id) : ''}
         scrollEnabled={false}
       />
     </ThemedView>

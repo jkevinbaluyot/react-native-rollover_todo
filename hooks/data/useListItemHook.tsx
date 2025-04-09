@@ -64,13 +64,13 @@ const useListItemHook = () => {
 
     const toggleItemCompletion = (item: ListItem) => {
         if(item?.id && db_connection){
-            const updatedItem = { ...item, done: !item.done };
+            const updatedItem = { ...item, done: item.done ? 0 : 1 as 0 | 1 };
             updateListItem(db_connection, updatedItem)
             .then((result) => {
-
+            
                 setListItems((prevItems) =>
                     prevItems.map((i) =>
-                        i.id === updatedItem.id ? { ...item, done: updatedItem.done } : item
+                        i.id === updatedItem.id ? { ...i, done: updatedItem.done } : i
                     )
                 );
             });
