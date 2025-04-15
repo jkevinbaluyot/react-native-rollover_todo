@@ -32,13 +32,13 @@ const DATA = [
 // /list/[id]
 function ListShow() {
   const { 
-    listItems, 
     setListItems,
+    listItems,
+    setList, 
     list,
-    setList,
+    updateItem,
     addItem
   } = useListItemHook();
-
   return (
     <SafeAreaView
       style={{ flex: 1 }}
@@ -52,12 +52,11 @@ function ListShow() {
               { list?.date_string ? formatDate(list?.date_string) : 'List' }
             </ThemedText>
           </HeaderContainer>
-
           <ThemedView
             style={[getContainerStyle().default, { flex: 1 }]}
           >
             <FlatList data={listItems} 
-              renderItem={({item}) => <ListItem id={String(item.id)} text={item.value} done={item.done} />}
+              renderItem={({item}) => <ListItem updateItem={updateItem} data={item} id={String(item.id)} text={item.value} done={item.done} />}
               keyExtractor={item => String(item.id)}
               className='py-2'
               scrollEnabled={false}
@@ -77,7 +76,8 @@ const getContainerStyle = () => {
     default: {
       borderWidth: 4,
       borderColor: borderColor,
-      borderRadius: 6
+      borderRadius: 6,
+      height: 400
     }
   });
 }

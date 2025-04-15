@@ -6,8 +6,11 @@ import { styles } from './ThemedText';
 import { Button } from './Button';
 import { ThemedText } from './ThemedText';
 import { ListItemPopup } from './list/ListItemPopup';
+import { ListItem as ListItemModel } from '@/models';
 
 type ItemProps = {
+  updateItem: (item: Partial<ListItemModel>) => Promise<void>;
+  data: ListItemModel,
   id?: string;
   text?: string; 
   done?: number;
@@ -16,6 +19,8 @@ type ItemProps = {
 };
 
 export function ListItem({
+  updateItem,
+  data,
   id,
   lightColor,
   darkColor, 
@@ -25,8 +30,11 @@ export function ListItem({
 
   const [toggleCheckBox, setToggleCheckBox] = useState(done === 1);
   const [showModal, setShowModal] = useState(false);
-  const updateCheckbox = (value: any) => {
-    setToggleCheckBox(prevState => !prevState)
+  const updateCheckbox = async (value: any) => {
+      const newValue={ ...data, done: !toggleCheckBox ? 1 : 0 }
+      setToggleCheckBox(prevState => newValue.done === 1);
+      console.log(newValue)
+      await updateItem(newValue)
   }
 
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
@@ -80,6 +88,8 @@ export function ListItem({
                       value={text || ''} 
                       show={showModal}
                       closeModal={closeModal}
+                      data={data}
+                      updateItem={updateItem}
                     />
                   }
                   

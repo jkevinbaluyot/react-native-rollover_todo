@@ -40,17 +40,17 @@ const useListItemHook = () => {
             id: undefined,
             list_id: list_id,
             value: value,
-            done: false,
+            done: 0,
         }
 
         if (db_connection) {
             return createListItem(db_connection, item)
                     .then((result) => {
                         const newItem: ListItem = {
-                        id: result.lastInsertRowId,
-                        list_id: item.list_id,
-                        value: item.value,
-                        done: item.done,
+                            id: result.lastInsertRowId,
+                            list_id: item.list_id,
+                            value: item.value,
+                            done: item.done,
                         };
                         setListItems((prevItems) => [...prevItems, newItem]);
                         return newItem;
@@ -78,13 +78,25 @@ const useListItemHook = () => {
 
     };
 
-    const updateItem = (item: ListItem) => {
+    const updateItem = async (item: ListItem) => {
         if(item?.id && db_connection){
-            const updatedItem = { ...item, value: item.value };
-            updateListItem(db_connection, updatedItem)
-            .then((result) => {
-                setListItems((prevItems) => [...prevItems.filter((i) => i.id !== item.id), updatedItem]);
-            });
+            return updateListItem(db_connection, item)
+                    .then((result) => {
+                        const newItem: ListItem = {
+                            id: result.lastInsertRowId,
+                            list_id: item.list_id,
+                            value: item.value,
+                            done: item.done,
+                        };
+                        setListItems((prevItems) => 
+                            prevItems.map((i) =>
+                                i.id === item.id ? { ...i, value: item.value, done: item.done } : i
+                            ));
+                        console.log(listItems)
+                    });
+        } else{
+            console.error("Database connection is null.");
+            return Promise.reject("Database connection is null.");
         }
     };
 

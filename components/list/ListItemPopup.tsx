@@ -1,26 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Modal } from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { ThemedText } from '../ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedView } from '../ThemedView';
 import { Button } from '../Button';
+import { ListItem } from '@/models';
+import useListItemHook from '@/hooks/data/useListItemHook';
 
 interface ListItemPopupProps {
+    updateItem: (item: Partial<ListItem>) => Promise<void>;
+    data: ListItem,
     id: number | undefined;
     value: string;
     show: boolean;
     closeModal: () => void;
 } 
 
-export const ListItemPopup: React.FC<ListItemPopupProps> = ({ id, value, show, closeModal }) => {
+export const ListItemPopup: React.FC<ListItemPopupProps> = ({ updateItem, data, id, value, show, closeModal }) => {
     const [valueText, setValueText] = useState(value);
     const backgroundColor = useThemeColor({}, 'background');
     const borderColor = useThemeColor({}, 'border');
     const color = useThemeColor({}, 'text');
+    const inputRef = useRef<TextInput>(null);
 
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }, []);
+  
 
     const handleSubmit = () => {
+      const newValues = {...data, value: valueText}
+      updateItem(newValues)
+        .then(() => {
+          closeModal();
+        })
     }
 
     return (
@@ -39,30 +56,35 @@ export const ListItemPopup: React.FC<ListItemPopupProps> = ({ id, value, show, c
                     }
                 >
                     <ThemedView
-                     className="flex h-screen justify-center w-100 relative"
+                     className="flex h-screen relative"
                     >
-                        <ThemedText>Edit: </ThemedText>
-                        <TextInput
-                            value={valueText}
-                            onChangeText={(text: string) => setValueText(text)}
-                            style={[styles.input, { borderColor, color }]}
-                            className='mb-4'
-                        />
+                        <ThemedView
+                          className='mb-4'
+                        >
+                          <ThemedText>Edit: </ThemedText>
+                          <TextInput
+                              value={valueText}
+                              onChangeText={(text: string) => setValueText(text)}
+                              style={[styles.input, { borderColor, color }]}
+                              ref={inputRef}
+                          />
+                        </ThemedView>
+
 
                         <ThemedView
-                          className='flex-row justify-between bottom-0 w-100'
+                          className='w-screen absolute bottom-0'
                         >
                           <Button 
                             type='error' 
                             title='Cancel'
-                            className='w-1/2 m-1'
+                            className='w-1/2 ml-auto m-1'
                             onClick={closeModal}
                           />
 
                           <Button 
                             type='success' 
                             title='Save'
-                            className='w-1/2 m-1'
+                            className='w-1/2 ml-auto m-1'
                             onClick={handleSubmit}
                           />
                         </ThemedView>
@@ -75,45 +97,8 @@ export const ListItemPopup: React.FC<ListItemPopupProps> = ({ id, value, show, c
     );
 };
 export const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     modalView: {
-      margin: 20,
-      backgroundColor: 'white',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-    },
-    button: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2,
-    },
-    buttonOpen: {
-      backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-      backgroundColor: '#2196F3',
-    },
-    textStyle: {
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: 'center',
+      padding: 20
     },
     input: {
       height: 60,
